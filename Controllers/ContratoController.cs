@@ -212,7 +212,7 @@ public class ContratoController : Controller
         return View(c);
     }
 
-public IActionResult BajaAnticipada(int id)
+    public IActionResult BajaAnticipada(int id)
     {
         Contrato? c = null;
         DateTime hoy = DateTime.Now;
@@ -248,7 +248,7 @@ public IActionResult BajaAnticipada(int id)
             }
             else
             {
-                _notyf.Error("Eliminar contrato seleccionado ya ha sido dado de baja.");
+                _notyf.Error("El contrato seleccionado ya ha sido dado de baja.");
                 return RedirectToAction(nameof(Index));
             }
 
@@ -439,6 +439,51 @@ public IActionResult BajaAnticipada(int id)
         else
         {
             _notyf.Error(msg.NoAccion("actualizar", "Contrato"));
+        }
+        return RedirectToAction(nameof(Index));
+    }
+
+
+
+    public IActionResult DarDeBaja(int idc, int idu, decimal m)
+    {
+        Contrato c = null;
+        int res = -1, resP = -1;
+        try
+        {
+            c = r.BuscarPorId(idc);
+            c.fechaBaja = DateTime.Now;
+            c.IdUsuarioBaja = idu;
+            res = r.Modificacion(c);
+            Pago p = new Pago
+            {
+                IdContrato = idc,
+                Numero = new RepositorioPago().ListarPorContrato(c.IdContrato).Count() + 1,
+                Fecha = DateTime.Today,
+                Precio = m/100m,//Lo divido por 100 porque toma los decimales como enteros.
+                Detalle = "Multa por baja anticipada",
+                IdUsuarioAlta = int.Parse(User.FindFirst("id").Value)
+            };
+            resP = new RepositorioPago().Alta(p);
+        }
+        catch (Exception ex)
+        {
+            if (ex is MySqlException)
+            {
+                _notyf.Error(msg.ErrorDB);
+            }
+            else
+            {
+                _notyf.Error(msg.ErrorGral);
+            }
+        }
+        if (res == 1 && resP > 0)
+        {
+            _notyf.Success(msg.OkAccion("dado de baja", "Contrato"));
+        }
+        else
+        {
+            _notyf.Error(msg.NoAccion("dar de baja", "Contrato"));
         }
         return RedirectToAction(nameof(Index));
     }

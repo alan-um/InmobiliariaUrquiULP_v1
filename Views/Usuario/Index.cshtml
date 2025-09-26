@@ -8,14 +8,14 @@
         </h1>
     </div>
 </div>
-<div>
-    <div class="btn-toolbar ancho-850 border-bottom justify-content-between pt-4 pb-3" role="toolbar"
-        aria-label="Toolbar with button groups"">
+<div style="text-align: right;">
+    @* <div class=" btn-toolbar ancho-850 border-bottom justify-content-between pt-4 pb-3" role="toolbar"
+    aria-label="Toolbar with button groups"">
         <div class=" input-group">
-        <div class="input-group-text" id="btnGroupAddon2">Filtrar:</div>
-        <input type="text" id="expFiltro" class="form-control noFocus" placeholder="Buscar por mail, nombre o apellido"
-            oninput="filtrarUsuarios()" style="min-width:500px;">
-    </div>
+    <div class="input-group-text" id="btnGroupAddon2">Filtrar:</div>
+    <input type="text" id="expFiltro" class="form-control noFocus" placeholder="Buscar por mail, nombre o apellido"
+        oninput="filtrarUsuarios()" style="min-width:500px;">
+</div> *@
     <div class="btn-group" role="group" aria-label="First group">
         <a asp-area="" asp-controller="Usuario" asp-action="FormAM" class="btn btn-outline-dark">
             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-plus-lg"
@@ -64,7 +64,7 @@
                     @Html.DisplayFor(modelItem => item.Apellido)
                 </td>
                 <td>
-                    @((item.isAdmin==true) ? "Administrador" : "Empleado")
+                    @((item.isAdmin == true) ? "Administrador" : "Empleado")
                 </td>
                 <td id="acciones">
                     <div class="btn-toolbar justify-content-center" role="toolbar" aria-label="Toolbar with button groups">
@@ -94,7 +94,8 @@
                             @{
                                 if (User.IsInRole("Administrador"))
                                 {
-                                    <a onclick="confirmaEliminar(@item.IdUsuario, 'Usuario')" class="btn btn-outline-danger" title="Eliminar">
+                                    <a onclick="confirmaEliminar(@item.IdUsuario, 'Usuario')" class="btn btn-outline-danger"
+                                        title="Eliminar">
                                         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
                                             class="bi bi-trash" viewBox="0 0 16 16">
                                             <path

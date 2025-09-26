@@ -273,6 +273,36 @@ function confirmaEliminarContrato(id) {
         });
 }
 
+
+function confirmaEliminarPago(id) {
+    fetch(`/Pago/Id/${id}`)
+        .then(response => response.json())
+        .then(data => {
+            console.log(data);
+            if (data.msgError != null) {
+                toastNotifyError(data.msgError);
+            } else {
+                //const fecha = new Date(data.fecha);
+                document.getElementById("modal-title").innerText = "¿Desea eliminar?";
+                document.getElementById("modal-body").innerHTML = `
+                    <p>Esta por eliminar el inmueble con la siguiente descripción:</p>
+                    <h5 style="text-align: center;">\"${new Date(data.fecha).toLocaleDateString()} - ${data.detalle}\"</h5>
+                    <p style="margin-right: 25px; text-align: right;">¿Desea continuar?</p>`;
+                document.getElementById("modal-footer").innerHTML = `
+                        <form action="Pago/Eliminar" method="post" novalidate="true">
+                            <input type="hidden" name="id" value="${data.idPago}" />
+                            <input type = "submit" value = "Eliminar" class="btn btn-danger" />
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                        </form > `;
+                const openModal = document.createElement('a');
+                openModal.setAttribute("data-bs-toggle", "modal");
+                openModal.setAttribute("data-bs-target", "#modal");
+                document.getElementById("acciones").appendChild(openModal);
+                openModal.click();
+            }
+        });
+}
+
 //----Cargar y resetear el avatar-------
 const inputAvatar = document.getElementById('inputAvatar');
 const inputAvatarFile = document.getElementById('inputAvatarFile');

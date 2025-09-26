@@ -134,18 +134,18 @@
 			<tbody>
 				<tr>
 					<th>
-						@ViewBag.multa
+						$ @ViewBag.multa
 					</th>
 				</tr>
 			</tbody>
 		</table>
 	</div>
-	}
 </div>
 <div class="pt-4">
 	<div class="form-group ancho-850 flex justify-content-evenly pt-4 pb-3">
-		<a asp-area="" asp-controller="Contrato" asp-action="FormAM" asp-route-id="@Model.IdContrato"
-			class="btn btn-outline-dark" />Editar datos</a>
-		<a asp-area="" asp-controller="Contrato" asp-action="Index" class="btn btn-outline-secondary" />Volver</a>
+		<a asp-area="" asp-controller="Contrato" asp-action="DarDeBaja" asp-route-idc="@Model.IdContrato"
+			asp-route-idu="@User.FindFirst("id").Value" asp-route-m="@ViewBag.Multa"
+			class="btn btn-outline-dark" />Pagar y dar de baja</a>
+		<a asp-area="" asp-controller="Contrato" asp-action="Index" class="btn btn-outline-danger" />Cancelar</a>
 	</div>
 </div>

@@ -47,7 +47,8 @@ public class PagoController : Controller
                     Numero = item.Numero,
                     Fecha = item.Fecha,
                     Detalle = item.Detalle,
-                    Precio = item.Precio
+                    Precio = item.Precio,
+                    Estado =item.Estado
                 });
             }
         }

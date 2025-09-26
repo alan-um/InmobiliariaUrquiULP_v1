@@ -47,6 +47,9 @@
             <th>
                 @Html.DisplayNameFor(model => model.Precio)
             </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Estado)
+            </th>
             <th style="min-width:120px"></th>
         </tr>
     </thead>
@@ -71,6 +74,9 @@
                 </td>
                 <td>
                     $ @Html.DisplayFor(modelItem => item.Precio)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Estado)
                 </td>
                 <td id="acciones">
                     <div class="btn-toolbar justify-content-center" role="toolbar" aria-label="Toolbar with button groups">
@@ -98,9 +104,9 @@
                                 </svg>
                             </a>
                             @{
-                                if (User.IsInRole("Administrador"))
+                                if (User.IsInRole("Administrador") && item.Estado==true)
                                 {
-                                    <a onclick="confirmaEliminar(@item.IdPago, 'Pago')" class="btn btn-outline-danger"
+                                    <a onclick="confirmaEliminarPago(@item.IdPago)" class="btn btn-outline-danger"
                                         title="Eliminar">
                                         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
                                             class="bi bi-trash" viewBox="0 0 16 16">
