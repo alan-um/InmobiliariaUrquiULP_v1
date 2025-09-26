@@ -1,0 +1,172 @@
+﻿@using Org.BouncyCastle.Tls.Crypto
+@model InmobiliariaUrquiULP_v1.Models.Contrato
+@{
+	ViewData["Title"] = "Detalle del Contrato";
+}
+<div class="ancho-850 border-bottom box-shadow">
+	<div class="text-center">
+		<h1 class="display-4">Detalles del Contrato</h1>
+	</div>
+</div>
+<div class="pt-4">
+	<table class="table ancho-850">
+		<thead>
+			<tr>
+				<th>
+					@Html.DisplayNameFor(model => model.IdContrato)
+				</th>
+				<th>
+					@Html.DisplayNameFor(model => model.Inquilino)
+				</th>
+				<th>
+					@Html.DisplayNameFor(model => model.Condicion)
+				</th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr>
+				<td>
+					@Html.DisplayFor(modelItem => Model.IdContrato)
+				</td>
+				<td>
+					@Model.Inquilino.NombreApellido()
+				</td>
+				<td>
+					@Html.DisplayFor(modelItem => Model.Condicion)
+				</td>
+			</tr>
+		</tbody>
+	</table>
+	<div class="pt-2">
+		<table class="table ancho-850">
+			<thead>
+				<tr>
+					<th colspan="4">Datos del Inmueble</th>
+				</tr>
+				<tr>
+					<th>
+						@Html.DisplayNameFor(model => model.Inmueble.Nombre)
+					</th>
+					<th>
+						@Html.DisplayNameFor(model => model.Inmueble.Direccion)
+					</th>
+					<th>
+						@Html.DisplayNameFor(model => model.Inmueble.Propietario)
+					</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr>
+					<td>
+						@Html.DisplayFor(modelItem => Model.Inmueble.Nombre)
+					</td>
+					<td>
+						@Html.DisplayFor(modelItem => Model.Inmueble.Direccion)
+					</td>
+					<td>
+						@Model.Inmueble.Propietario.NombreApellido()
+					</td>
+				</tr>
+			</tbody>
+		</table>
+	</div>
+	<div class="pt-4">
+		<table class="table ancho-850">
+			<thead>
+				<tr>
+					<th colspan="4">Fechas</th>
+				</tr>
+				<tr>
+					<th>
+						@Html.DisplayNameFor(model => model.fechaInicio)
+					</th>
+					<th>
+						@Html.DisplayNameFor(model => model.fechaFin)
+					</th>
+					<th>
+						@Html.DisplayNameFor(model => model.Precio)
+					</th>
+					@if (User.IsInRole("Administrador"))
+					{
+						<th>
+							@Html.DisplayNameFor(model => model.IdUsuarioAlta)
+						</th>
+					}
+				</tr>
+			</thead>
+			<tbody>
+				<tr>
+					<td>
+						@Model.fechaInicio.ToShortDateString()
+						@* @Html.DisplayFor(modelItem => Model.fechaInicio) *@
+					</td>
+					<td>
+						@Model.fechaFin.ToShortDateString()
+						@* @Html.DisplayFor(modelItem => Model.fechaFin) *@
+					</td>
+					<td>
+						$ @Html.DisplayFor(modelItem => Model.Precio)
+					</td>
+					@if (User.IsInRole("Administrador"))
+					{
+						<td>
+							@ViewBag.UsuarioAlta
+						</td>
+					}
+				</tr>
+			</tbody>
+		</table>
+	</div>
+	@if (Model.fechaBaja != null)
+	{
+		<div class="pt-4">
+			<table class="ancho-850 bajaAnticipada">
+				<thead>
+					<tr>
+						<th colspan="4" style="color:darkred">En contrato se ha dado de baja de forma anticipada.</th>
+					</tr>
+					<tr>
+						<th>
+							@Html.DisplayNameFor(model => model.fechaBaja)
+						</th>
+						@if (User.IsInRole("Administrador"))
+						{
+							<th>
+								@Html.DisplayNameFor(model => model.IdUsuarioBaja)
+							</th>
+						}
+					</tr>
+				</thead>
+				<tbody>
+					<tr>
+						<td>
+							@((Model.fechaBaja == null) ? "" : ViewBag.fechaBaja.ToShortDateString())
+						</td>
+						@if (User.IsInRole("Administrador"))
+						{
+							<td>
+								@((ViewBag.UsuarioBaja == null) ? "" : ViewBag.UsuarioBaja)
+							</td>
+						}
+					</tr>
+				</tbody>
+			</table>
+		</div>
+	}
+</div>
+<div class="pt-4">
+	<table class="table ancho-850">
+		<thead>
+			<tr>
+				<th>
+					Acá va el detalle de los pagos realizados
+				</th>
+			</tr>
+		</thead>
+	</table>
+</div>
+<div class="form-group ancho-850 flex justify-content-evenly pt-4 pb-3">
+	<a asp-area="" asp-controller="Contrato" asp-action="FormAM" asp-route-id="@Model.IdContrato"
+		class="btn btn-outline-dark" />Editar datos</a>
+	<a asp-area="" asp-controller="Contrato" asp-action="Index" class="btn btn-outline-secondary" />Volver</a>
+</div>

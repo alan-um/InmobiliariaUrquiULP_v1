@@ -1,0 +1,44 @@
+﻿@using System.Runtime.InteropServices
+<div class="modal fade" id="modal" tabindex="-1" aria-labelledby="modalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5" id="modal-title"></h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body" id="modal-body">
+            </div>
+            <div class="modal-footer" id="modal-footer">
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    function confirmaEliminar(id, entidad) {
+        stringId="data.id"+entidad;
+        //console.log("Modal cargado");
+        fetch(`@Url.Action("Id")/${id}`)
+            .then(response => response.json())
+            .then(data => {
+                console.log(data);
+                if (data.msgError != null) {
+                    toastNotifyError(data.msgError);
+                } else {
+                    document.getElementById("modal-title").innerText = "¿Desea eliminar?";
+                    document.getElementById("modal-body").innerText = `¿Esta seguro que desea eliminar al ${entidad.toLowerCase()} ${data.nombre} ${data.apellido}?`;
+                    document.getElementById("modal-footer").innerHTML = `
+                        <form action="${entidad}/Eliminar" method="post" novalidate="true">
+                            <input type="hidden" name="id" value="${data.id@(ViewContext.RouteData.Values["controller"].ToString())}" />
+                            <input type="submit" value="Eliminar" class="btn btn-danger" />
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                        </form>`;
+                    const openModal = document.createElement('a');
+                    openModal.setAttribute("data-bs-toggle", "modal");
+                    openModal.setAttribute("data-bs-target", "#modal");
+                    document.getElementById("acciones").appendChild(openModal);
+                    openModal.click();
+                    
+                }
+            });
+    }
+</script>

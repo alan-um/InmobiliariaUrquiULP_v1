@@ -1,0 +1,42 @@
+﻿@model InmobiliariaUrquiULP_v1.Models.ViewModelCambiarPass
+@{
+	ViewData["Title"] = "Cambiar contraseña";
+}
+
+<div class="ancho-850 border-bottom box-shadow">
+	<div class="text-center">
+		@* <h1 class="display-6">@((Model != null && Model.IdPropietario > 0) ? "Editar propietario" : "Crear propietario") *@
+		<h1 class="display-6">Cambiar contraseña
+		</h1>
+	</div>
+</div>
+<div class="row justify-content-center pt-5">
+	<div class="col-md-4">
+		<form asp-action="CambiarPass">
+			<div asp-validation-summary="ModelOnly" class="text-danger"></div>
+			<input type="hidden" name="@nameof(Model.IdUsuario)" value="@(Model == null ? 0 : Model.IdUsuario)" />
+			<div class="form-group pb-4">
+				<label asp-for="PassActual" class="control-label"></label>
+				<input asp-for="PassActual" class="form-control no-arrows" />
+				<span asp-validation-for="PassActual" class="text-danger"></span>
+			</div>
+			<div class="form-group pb-4">
+				<label asp-for="PassNueva" class="control-label"></label>
+				<input asp-for="PassNueva" class="form-control" />
+				<span asp-validation-for="PassNueva" class="text-danger"></span>
+			</div>
+			<div class="form-group pb-4">
+				<label asp-for="PassRepetida" class="control-label"></label>
+				<input asp-for="PassRepetida" class="form-control" />
+				<span asp-validation-for="PassRepetida" class="text-danger"></span>
+			</div>
+			<div class="form-group flex justify-content-evenly pt-3 pb-3">
+				<input type="submit" value="Modificar" class="btn btn-outline-dark" />
+				<a asp-area="" asp-controller="Usuario"
+					asp-action="@(ViewContext.RouteData.Values["action"].ToString().Equals("FormMiPass") ? "MiPerfil" : "FormAM")"
+					asp-route-id="@(ViewContext.RouteData.Values["action"].ToString().Equals("FormMiPass") ? "" : Model.IdUsuario)"
+					class="btn btn-outline-danger" />Cancelar</a>
+			</div>
+		</form>
+	</div>
+</div>

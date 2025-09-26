@@ -1,0 +1,38 @@
+﻿@model InmobiliariaUrquiULP_v1.Models.TipoInmueble
+@{
+	if (Model != null && Model.IdTipoInmueble > 0)
+	{
+		ViewData["Title"] = "Actualizar los datos del tipo de inmueble";
+	}
+	else
+	{
+		ViewData["Title"] = "Agregar nuevo tipo de inmueble";
+	}
+
+}
+<div class="ancho-850 border-bottom box-shadow">
+	<div class="text-center">
+		<h1 class="display-6">@((Model != null && Model.IdTipoInmueble > 0) ? "Editar tipo de inmueble" : "Crear tipo de inmueble")
+		</h1>
+	</div>
+</div>
+<div class="row justify-content-center pt-5">
+	<div class="col-md-4">
+		<form asp-action="@((Model != null && Model.IdTipoInmueble > 0) ?  "Editar" : "Crear")">
+			<div asp-validation-summary="ModelOnly" class="text-danger"></div>
+			<input type="hidden" name="@nameof(Model.IdTipoInmueble)"
+				value="@(Model == null ? 0 : Model.IdTipoInmueble)" />
+			<div class="form-group pb-4">
+				<label asp-for="Descripcion" class="control-label"></label>
+				<input asp-for="Descripcion" class="form-control no-arrows"/>
+				<span asp-validation-for="Descripcion" class="text-danger"></span>
+			</div>
+			
+			<div class="form-group flex justify-content-evenly pt-3 pb-3">
+				<input type="submit" value="@((Model != null && Model.IdTipoInmueble > 0) ? "Modificar" : "Agregar")"
+					class="btn btn-outline-dark" />
+				<a asp-area="" asp-controller="TipoInmueble" asp-action="Index" class="btn btn-outline-danger" />Cancelar</a>
+			</div>
+		</form>
+	</div>
+</div>

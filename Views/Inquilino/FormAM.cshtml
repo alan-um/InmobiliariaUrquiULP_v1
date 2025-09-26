@@ -1,0 +1,57 @@
+﻿@model InmobiliariaUrquiULP_v1.Models.Inquilino
+@{
+	if (Model != null && Model.IdInquilino > 0)
+	{
+		ViewData["Title"] = "Actualizar datos del inquilino";
+	}
+	else
+	{
+		ViewData["Title"] = "Agregar nuevo inquilino";
+	}
+
+}
+<div class="ancho-850 border-bottom box-shadow">
+	<div class="text-center">
+		<h1 class="display-6">@((Model != null && Model.IdInquilino > 0) ? "Editar inquilino" : "Crear inquilino")
+		</h1>
+	</div>
+</div>
+<div class="row justify-content-center pt-5">
+	<div class="col-md-4">
+		<form asp-action="@((Model != null && Model.IdInquilino > 0) ?  "Editar" : "Crear")">
+			<div asp-validation-summary="ModelOnly" class="text-danger"></div>
+			<input type="hidden" name="@nameof(Model.IdInquilino)"
+				value="@(Model == null ? 0 : Model.IdInquilino)" />
+			<div class="form-group pb-4">
+				<label asp-for="Dni" class="control-label"></label>
+				<input asp-for="Dni" class="form-control no-arrows"/>
+				<span asp-validation-for="Dni" class="text-danger"></span>
+			</div>
+			<div class="form-group pb-4">
+				<label asp-for="Nombre" class="control-label"></label>
+				<input asp-for="Nombre" class="form-control" />
+				<span asp-validation-for="Nombre" class="text-danger"></span>
+			</div>
+			<div class="form-group pb-4">
+				<label asp-for="Apellido" class="control-label"></label>
+				<input asp-for="Apellido" class="form-control" />
+				<span asp-validation-for="Apellido" class="text-danger"></span>
+			</div>
+			<div class="form-group pb-4">
+				<label asp-for="Telefono" class="control-label"></label>
+				<input asp-for="Telefono" class="form-control" />
+				<span asp-validation-for="Telefono" class="text-danger"></span>
+			</div>
+			<div class="form-group pb-4">
+				<label asp-for="Email" class="control-label"></label>
+				<input asp-for="Email" class="form-control" />
+				<span asp-validation-for="Email" class="text-danger"></span>
+			</div>
+			<div class="form-group flex justify-content-evenly pt-3 pb-3">
+				<input type="submit" value="@((Model != null && Model.IdInquilino > 0) ? "Modificar" : "Agregar")"
+					class="btn btn-outline-dark" />
+				<a asp-area="" asp-controller="Inquilino" asp-action="Index" class="btn btn-outline-danger" />Cancelar</a>
+			</div>
+		</form>
+	</div>
+</div>

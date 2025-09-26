@@ -1,0 +1,138 @@
+﻿@model InmobiliariaUrquiULP_v1.Models.Usuario
+@{
+	if (Model != null && Model.IdUsuario > 0)
+	{
+		ViewData["Title"] = "Actualizar datos de usuario";
+	}
+	else
+	{
+		ViewData["Title"] = "Agregar nuevo usuario";
+	}
+}
+<div class="ancho-850 border-bottom box-shadow">
+	<div class="text-center">
+		<h1 class="display-6">@((Model != null && Model.IdUsuario > 0) ? "Editar usuario" : "Crear usuario")
+		</h1>
+	</div>
+</div>
+<div class="row justify-content-center pt-5">
+	<div>
+		<form asp-action="@((Model != null && Model.IdUsuario > 0) ?  "Editar" : "Crear")"
+			enctype="multipart/form-data">
+			<div class="conteinerPerfil ancho-850">
+				<div class="col-md-5" style="text-align: left;">
+					<div asp-validation-summary="ModelOnly" class="text-danger"></div>
+					<input type="hidden" name="@nameof(Model.IdUsuario)"
+						value="@(Model == null ? 0 : Model.IdUsuario)" />
+					<div class="form-group pb-4">
+						<label asp-for="Nombre" class="control-label"></label>
+						<input asp-for="Nombre" class="form-control" />
+						<span asp-validation-for="Nombre" class="text-danger"></span>
+					</div>
+					<div class="form-group pb-4">
+						<label asp-for="Apellido" class="control-label"></label>
+						<input asp-for="Apellido" class="form-control" />
+						<span asp-validation-for="Apellido" class="text-danger"></span>
+					</div>
+					<div class="form-group pb-4">
+						<label asp-for="isAdmin" class="control-label"></label>
+						<div class="radio-group">
+							@if (User.IsInRole("Administrador"))
+							{
+								<label>
+									<input type="radio" asp-for="isAdmin" value="true" /> Administrador
+								</label>
+								if (Model == null)
+								{
+									<label>
+										<input type="radio" asp-for="isAdmin" value="false" checked /> Empleado
+									</label>
+								}
+								else
+								{
+									<label>
+										<input type="radio" asp-for="isAdmin" value="false" /> Empleado
+									</label>
+								}
+							}
+							else
+							{
+								<label>
+									<input type="radio" asp-for="isAdmin" value="true" disabled /> Administrador
+								</label>
+								<label>
+									<input type="radio" asp-for="isAdmin" value="false" disabled /> Empleado
+								</label>
+							}
+						</div>
+						<span asp-validation-for="isAdmin" class="text-danger"></span>
+					</div>
+					<div class="form-group pb-4">
+						<label asp-for="Email" class="control-label"></label>
+						<input asp-for="Email" class="form-control" />
+						<span asp-validation-for="Email" class="text-danger"></span>
+					</div>
+					<div class="form-group pb-4"
+						style="@((Model != null && Model.IdUsuario > 0) ? "display:none" : "")">
+						<label asp-for="Pass" class="control-label"></label>
+						<input asp-for="Pass" class="form-control"
+							value="@((Model != null && Model.IdUsuario > 0) ? "123" : "")" />
+						<span asp-validation-for="Pass" class="text-danger"></span>
+					</div>
+				</div>
+
+				<div class="col-md-3 text-center">
+					<div class="border-bottom box-shadow">
+						<div>
+							<img src="@(Model != null && Model.Avatar != null && !Model.Avatar.Equals("") ? Model.Avatar : "/Uploads/noAvatar.png")"
+								alt="" class="imgPerfil rounded-circle" id="imgAvatar">
+						</div>
+						<div class="form-group pb-4" style="display:none">
+							<label asp-for="Avatar" class="control-label"></label>
+							<input asp-for="Avatar" class="form-control" id="inputAvatar"
+								value="@((Model == null) ? "" : (Model.Avatar == null) ? "" : Model.Avatar)" />
+							<span asp-validation-for=" Avatar" class="text-danger"></span>
+						</div>
+						<div class="form-group">
+							@* <label asp-for="AvatarFile" class="control-label" ></label> *@
+							<input asp-for="AvatarFile" name="AvatarFile" id="inputAvatarFile" accept="image/*"
+								style="display:none" />
+							<span asp-validation-for="AvatarFile" class="text-danger"></span>
+						</div>
+						<div class="form-group flex justify-content-evenly pt-2 pb-3">
+							<button type="button" onclick="cargarAvatar()"
+								class="btn btn-outline-secondary" />Cargar</button>
+							<button type="button" onclick="borrarAvatar()"
+								class="btn btn-outline-danger" />Borrar</button>
+						</div>
+					</div>
+					@{
+						if (Model != null && Model.IdUsuario > 0)
+						{
+							<div class="form-group flex justify-content-evenly pt-3 pb-3">
+								<a asp-area="" asp-controller="Usuario"
+									asp-action="@(ViewContext.RouteData.Values["action"].ToString().Equals("MiPerfil") ? "FormMiPass" : "FormPass")"
+									asp-route-id="@(ViewContext.RouteData.Values["action"].ToString().Equals("MiPerfil") ? "" : Model.IdUsuario)"
+									class="btn btn-outline-secondary">Cambiar contraseña</a>
+							</div>
+						}
+					}
+				</div>
+			</div>
+			<div class="form-group contSummit pt-3 pb-3">
+				<input type="submit" value="@((Model != null && Model.IdUsuario > 0) ? "Modificar" : "Agregar")"
+					class="btn btn-outline-dark" />
+				@if (Model != null && Model.IdUsuario > 0)
+				{
+					<a asp-area="" asp-controller="Usuario"
+						asp-action="@(User.IsInRole("Administrador") ? "Index" : "MiPerfil")"
+						class="btn btn-outline-danger">Descartar cambios</a>
+				}
+				else
+				{
+					<a asp-area="" asp-controller="Usuario" asp-action="Index" class="btn btn-outline-danger">Cancelar</a>
+				}
+			</div>
+		</form>
+	</div>
+</div>

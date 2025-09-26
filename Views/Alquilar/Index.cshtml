@@ -1,0 +1,125 @@
+﻿@model IEnumerable<InmobiliariaUrquiULP_v1.Models.Inmueble>
+@{
+    ViewData["Title"] = "Alquilar";
+}
+<div class="ancho-850 border-bottom box-shadow">
+    <div class="text-center">
+        <h1 class="display-5">Listado de inmuebles disponibles
+        </h1>
+    </div>
+</div>
+<div>
+    <div style="text-align: right;">
+        <div class="btn-toolbar ancho-850 border-bottom justify-content-between pt-4 pb-3" role="toolbar"
+            aria-label="Toolbar with button groups"">
+        <div class=" input-group">
+            <div class="input-group-text" id="btnGroupAddon2">Desde:</div>
+            <input type="date" id="desde" class="form-control noFocus" style="min-width:150px;"
+                value="@((ViewBag.desde != null) ? ViewBag.desde.ToString("yyyy-MM-dd") : "")">
+        </div>
+        <div class=" input-group">
+            <div class="input-group-text" id="btnGroupAddon2">Hasta:</div>
+            <input type="date" id="hasta" class="form-control noFocus" style="min-width:150px;"
+                value="@((ViewBag.hasta != null) ? ViewBag.hasta.ToString("yyyy-MM-dd") : "")">
+        </div>
+        <div class="btn-group" role="group" aria-label="First group" id="buscar">
+            <button class="btn btn-outline-dark" onclick="filtrarInmueblesPorFecha()">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-search"
+                    viewBox="0 0 16 16">
+                    <path
+                        d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001q.044.06.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1 1 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0" />
+                </svg> Buscar</button>
+        </div>
+        <div class="btn-group" role="group" aria-label="First group" id="buscar">
+            <a href="/Alquilar" class="btn btn-outline-dark">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor"
+                    class="bi bi-calendar-x" viewBox="0 0 16 16">
+                    <path
+                        d="M6.146 7.146a.5.5 0 0 1 .708 0L8 8.293l1.146-1.147a.5.5 0 1 1 .708.708L8.707 9l1.147 1.146a.5.5 0 0 1-.708.708L8 9.707l-1.146 1.147a.5.5 0 0 1-.708-.708L7.293 9 6.146 7.854a.5.5 0 0 1 0-.708" />
+                    <path
+                        d="M3.5 0a.5.5 0 0 1 .5.5V1h8V.5a.5.5 0 0 1 1 0V1h1a2 2 0 0 1 2 2v11a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V3a2 2 0 0 1 2-2h1V.5a.5.5 0 0 1 .5-.5M1 4v10a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V4z" />
+                </svg> Limpiar</a>
+        </div>
+    </div>
+
+</div>
+
+</div>
+<table class="table ancho-850">
+    <td id="errorFechas" class="text-danger" style="border: none;"></td>
+</table>
+<table class="table ancho-850">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.IdInmueble)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Nombre)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Direccion)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Uso)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Tipo)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Precio)
+            </th>
+            <th style="min-width:120px"></th>
+        </tr>
+    </thead>
+    <tbody id="tbody">
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.IdInmueble)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Nombre)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Direccion)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Uso)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Tipo)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Precio)
+                </td>
+                <td id="acciones">
+                    <div class="btn-toolbar justify-content-center" role="toolbar" aria-label="Toolbar with button groups">
+                        <div class="btn-group" role="group" aria-label="First group">
+                            <a asp-area="" asp-controller="Contrato" asp-action="Nuevo" asp-route-id="@item.IdInmueble"
+                                asp-route-desde="@((ViewBag.desde != null) ? ViewBag.desde.ToString("yyyy-MM-dd") : "")"
+                                asp-route-hasta="@((ViewBag.hasta != null) ? ViewBag.hasta.ToString("yyyy-MM-dd") : "")"
+                                class="btn btn-outline-secondary" title="Editar">
+                                Alquilar
+                            </a>
+                        </div>
+                    </div>
+                </td>
+            </tr>
+        }
+    </tbody>
+    @{
+        if (Model.Count() == 0)
+        {
+            <tfoot>
+                <tr>
+                    <td colspan="100" style="text-align:center">
+                        <h5>No se encontraron coincidencias.</h5>
+                    </td>
+                </tr>
+            </tfoot>
+        }
+    }
+</table>
+</div>

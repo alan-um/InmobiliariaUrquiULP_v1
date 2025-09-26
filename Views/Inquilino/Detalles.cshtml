@@ -1,0 +1,83 @@
+﻿@model InmobiliariaUrquiULP_v1.Models.Inquilino
+@{
+	ViewData["Title"] = "Detalle del Inquilino";
+}
+<div class="ancho-850 border-bottom box-shadow">
+	<div class="text-center">
+		<h1 class="display-4">Detalles de Inquilino</h1>
+	</div>
+</div>
+<div class="pt-4">
+	<table class="table ancho-850">
+		<thead>
+			<tr>
+				<th>
+					@Html.DisplayNameFor(model => model.IdInquilino)
+				</th>
+				<th>
+					@Html.DisplayNameFor(model => model.Dni)
+				</th>
+				<th>
+					@Html.DisplayNameFor(model => model.Nombre)
+				</th>
+				<th>
+					@Html.DisplayNameFor(model => model.Apellido)
+				</th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr>
+				<td>
+					@Html.DisplayFor(modelItem => Model.IdInquilino)
+				</td>
+				<td>
+					@Html.DisplayFor(modelItem => Model.Dni)
+				</td>
+				<td>
+					@Html.DisplayFor(modelItem => Model.Nombre)
+				</td>
+				<td>
+					@Html.DisplayFor(modelItem => Model.Apellido)
+				</td>
+			</tr>
+		</tbody>
+	</table>
+	<table class="table ancho-850">
+		<thead>
+			<tr>
+				<th colspan="2">
+					@Html.DisplayNameFor(model => model.Telefono)
+				</th>
+				<th colspan="2">
+					@Html.DisplayNameFor(model => model.Email)
+				</th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr>
+				<td colspan="2">
+					@Html.DisplayFor(modelItem => Model.Telefono)
+				</td>
+				<td colspan="2">
+					@Model.Email
+				</td>
+			</tr>
+		</tbody>
+	</table>
+</div>
+<div class="pt-4">
+	<table class="table ancho-850">
+		<thead>
+			<tr>
+				<th>
+					Acá va el detalle de los contratos que tiene para realizados
+				</th>
+			</tr>
+		</thead>
+	</table>
+</div>
+<div class="form-group ancho-850 flex justify-content-evenly pt-4 pb-3">
+	<a asp-area="" asp-controller="Inquilino" asp-action="FormAM" asp-route-id="@Model.IdInquilino"
+		class="btn btn-outline-dark" />Editar datos</a>
+	<a asp-area="" asp-controller="Inquilino" asp-action="Index" class="btn btn-outline-secondary" />Volver</a>
+</div>

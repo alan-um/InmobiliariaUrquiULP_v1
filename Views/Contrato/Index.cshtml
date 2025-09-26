@@ -1,0 +1,174 @@
+﻿@model IEnumerable<InmobiliariaUrquiULP_v1.Models.Contrato>
+@{
+    ViewData["Title"] = "Listado de contratos";
+}
+<div class="ancho-850 border-bottom box-shadow">
+    <div class="text-center">
+        <h1 class="display-5">Listado de contratos
+        </h1>
+    </div>
+</div>
+<div style="text-align: right;">
+    @* <div class="btn-toolbar ancho-850 border-bottom justify-content-between pt-4 pb-3" role="toolbar"
+        aria-label="Toolbar with button groups"">
+        <div class=" input-group">
+        <div class="input-group-text" id="btnGroupAddon2">Filtrar:</div>
+        <input type="text" id="expFiltro" class="form-control noFocus" placeholder="Buscar nombre o dirección del Contrato"
+            oninput="filtrarContratos()" style="min-width:500px;">
+    </div> *@
+    @* <div class="btn-group" role="group" aria-label="First group">
+        <a asp-area="" asp-controller="Contrato" asp-action="FormAM" class="btn btn-outline-dark">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-plus-lg"
+                viewBox="0 0 16 16">
+                <path fill-rule="evenodd"
+                    d="M8 2a.5.5 0 0 1 .5.5v5h5a.5.5 0 0 1 0 1h-5v5a.5.5 0 0 1-1 0v-5h-5a.5.5 0 0 1 0-1h5v-5A.5.5 0 0 1 8 2">
+                </path>
+            </svg> Nuevo</a>
+    </div> *@
+</div>
+<table class="table ancho-850">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.IdContrato)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Inmueble.Nombre)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Inquilino)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.fechaInicio)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.fechaFin)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Condicion)
+            </th>
+            <th style="min-width:120px"></th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody id="tbody">
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.IdContrato)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Inmueble.Nombre)
+                </td>
+                <td>
+                    @item.Inquilino.NombreApellido()
+                </td>
+                <td>
+                    @item.fechaInicio.ToShortDateString()
+                </td>
+                <td>
+                    @item.fechaFin.ToShortDateString()
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Condicion)
+                </td>
+                <td id="acciones">
+                    <div class="btn-toolbar justify-content-center" role="toolbar" aria-label="Toolbar with button groups">
+                        <div class="btn-group" role="group" aria-label="First group">
+                            <a asp-area="" asp-controller="Contrato" asp-action="FormAM" asp-route-id="@item.IdContrato"
+                                class="btn btn-outline-secondary" title="Editar">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                                    class="bi bi-pencil-square" viewBox="0 0 16 16">
+                                    <path
+                                        d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z" />
+                                    <path fill-rule="evenodd"
+                                        d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5z" />
+                                </svg>
+                            </a>
+                            <a asp-area="" asp-controller="Contrato" asp-action="Detalles" asp-route-id="@item.IdContrato"
+                                class="btn btn-outline-secondary" title="Detalles">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                                    class="bi bi-journal-richtext" viewBox="0 0 16 16">
+                                    <path
+                                        d="M7.5 3.75a.75.75 0 1 1-1.5 0 .75.75 0 0 1 1.5 0m-.861 1.542 1.33.886 1.854-1.855a.25.25 0 0 1 .289-.047L11 4.75V7a.5.5 0 0 1-.5.5h-5A.5.5 0 0 1 5 7v-.5s1.54-1.274 1.639-1.208M5 9.5a.5.5 0 0 1 .5-.5h5a.5.5 0 0 1 0 1h-5a.5.5 0 0 1-.5-.5m0 2a.5.5 0 0 1 .5-.5h2a.5.5 0 0 1 0 1h-2a.5.5 0 0 1-.5-.5" />
+                                    <path
+                                        d="M3 0h10a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2v-1h1v1a1 1 0 0 0 1 1h10a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H3a1 1 0 0 0-1 1v1H1V2a2 2 0 0 1 2-2" />
+                                    <path
+                                        d="M1 5v-.5a.5.5 0 0 1 1 0V5h.5a.5.5 0 0 1 0 1h-2a.5.5 0 0 1 0-1zm0 3v-.5a.5.5 0 0 1 1 0V8h.5a.5.5 0 0 1 0 1h-2a.5.5 0 0 1 0-1zm0 3v-.5a.5.5 0 0 1 1 0v.5h.5a.5.5 0 0 1 0 1h-2a.5.5 0 0 1 0-1z" />
+                                </svg>
+                            </a>
+                            @{
+                                if (User.IsInRole("Administrador"))
+                                {
+                                    <a onclick="confirmaEliminarContrato(@item.IdContrato)" class="btn btn-outline-danger"
+                                        title="Eliminar">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                                            class="bi bi-trash" viewBox="0 0 16 16">
+                                            <path
+                                                d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5m2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5m3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0z" />
+                                            <path
+                                                d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1zM4.118 4 4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4zM2.5 3h11V2h-11z" />
+                                        </svg>
+                                    </a>
+                                }
+
+                            }
+                        </div>
+                    </div>
+                </td>
+                <td>
+                    <div class="btn-toolbar justify-content-center" role="toolbar" aria-label="Toolbar with button groups">
+                        <div class="btn-group" role="group" aria-label="First group">
+                            <a asp-area="" asp-controller="Pago" asp-action="Nuevo" asp-route-id="@item.IdContrato"
+                                class="btn btn-outline-secondary" title="Pagar">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                                    class="bi bi-cash-coin" viewBox="0 0 16 16">
+                                    <path fill-rule="evenodd"
+                                        d="M11 15a4 4 0 1 0 0-8 4 4 0 0 0 0 8m5-4a5 5 0 1 1-10 0 5 5 0 0 1 10 0" />
+                                    <path
+                                        d="M9.438 11.944c.047.596.518 1.06 1.363 1.116v.44h.375v-.443c.875-.061 1.386-.529 1.386-1.207 0-.618-.39-.936-1.09-1.1l-.296-.07v-1.2c.376.043.614.248.671.532h.658c-.047-.575-.54-1.024-1.329-1.073V8.5h-.375v.45c-.747.073-1.255.522-1.255 1.158 0 .562.378.92 1.007 1.066l.248.061v1.272c-.384-.058-.639-.27-.696-.563h-.668zm1.36-1.354c-.369-.085-.569-.26-.569-.522 0-.294.216-.514.572-.578v1.1zm.432.746c.449.104.655.272.655.569 0 .339-.257.571-.709.614v-1.195z" />
+                                    <path
+                                        d="M1 0a1 1 0 0 0-1 1v8a1 1 0 0 0 1 1h4.083q.088-.517.258-1H3a2 2 0 0 0-2-2V3a2 2 0 0 0 2-2h10a2 2 0 0 0 2 2v3.528c.38.34.717.728 1 1.154V1a1 1 0 0 0-1-1z" />
+                                    <path d="M9.998 5.083 10 5a2 2 0 1 0-3.132 1.65 6 6 0 0 1 3.13-1.567" />
+                                </svg>
+                            </a>
+                        </div>
+                    </div>
+                </td>
+                <td>
+                    <div class="btn-toolbar justify-content-center" role="toolbar" aria-label="Toolbar with button groups">
+                        <div class="btn-group" role="group" aria-label="First group">
+                            <a asp-area="" asp-controller="Contrato" asp-action="BajaAnticipada" asp-route-id="@item.IdContrato"
+                                class="btn btn-outline-secondary" title="Dar de baja">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                                    class="bi bi-cash-coin" viewBox="0 0 16 16">
+                                    <path fill-rule="evenodd"
+                                        d="M11 15a4 4 0 1 0 0-8 4 4 0 0 0 0 8m5-4a5 5 0 1 1-10 0 5 5 0 0 1 10 0" />
+                                    <path
+                                        d="M9.438 11.944c.047.596.518 1.06 1.363 1.116v.44h.375v-.443c.875-.061 1.386-.529 1.386-1.207 0-.618-.39-.936-1.09-1.1l-.296-.07v-1.2c.376.043.614.248.671.532h.658c-.047-.575-.54-1.024-1.329-1.073V8.5h-.375v.45c-.747.073-1.255.522-1.255 1.158 0 .562.378.92 1.007 1.066l.248.061v1.272c-.384-.058-.639-.27-.696-.563h-.668zm1.36-1.354c-.369-.085-.569-.26-.569-.522 0-.294.216-.514.572-.578v1.1zm.432.746c.449.104.655.272.655.569 0 .339-.257.571-.709.614v-1.195z" />
+                                    <path
+                                        d="M1 0a1 1 0 0 0-1 1v8a1 1 0 0 0 1 1h4.083q.088-.517.258-1H3a2 2 0 0 0-2-2V3a2 2 0 0 0 2-2h10a2 2 0 0 0 2 2v3.528c.38.34.717.728 1 1.154V1a1 1 0 0 0-1-1z" />
+                                    <path d="M9.998 5.083 10 5a2 2 0 1 0-3.132 1.65 6 6 0 0 1 3.13-1.567" />
+                                </svg>
+                            </a>
+                        </div>
+                    </div>
+                </td>
+            </tr>
+        }
+    </tbody>
+    @{
+        if (Model.Count() == 0)
+        {
+            <tfoot>
+                <tr>
+                    <td colspan="100" style="text-align:center">
+                        <h5>No se encontraron contratos para mostrar.</h5>
+                    </td>
+                </tr>
+            </tfoot>
+        }
+    }
+</table>
+</div>

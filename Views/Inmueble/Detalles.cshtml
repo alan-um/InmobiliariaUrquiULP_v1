@@ -1,0 +1,136 @@
+﻿@model InmobiliariaUrquiULP_v1.Models.Inmueble
+@{
+	ViewData["Title"] = "Detalle del Inmueble";
+}
+<div class="ancho-850 border-bottom box-shadow">
+	<div class="text-center">
+		<h1 class="display-4">Detalles del Inmueble</h1>
+	</div>
+</div>
+<div class="pt-4">
+	<table class="table ancho-850">
+		<thead>
+			<tr>
+				<th>
+					@Html.DisplayNameFor(model => model.IdInmueble)
+				</th>
+				<th>
+					@Html.DisplayNameFor(model => model.Nombre)
+				</th>
+				<th>
+					@Html.DisplayNameFor(model => model.Direccion)
+				</th>
+				<th>
+					@Html.DisplayNameFor(model => model.Habilitado)
+				</th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr>
+				<td>
+					@Html.DisplayFor(modelItem => Model.IdInmueble)
+				</td>
+				<td>
+					@Html.DisplayFor(modelItem => Model.Nombre)
+				</td>
+				<td>
+					@Html.DisplayFor(modelItem => Model.Direccion)
+				</td>
+				<td>
+					@Html.DisplayFor(modelItem => Model.Habilitado)
+				</td>
+			</tr>
+		</tbody>
+	</table>
+	<div class="pt-2">
+		<table class="table ancho-850">
+			<thead>
+				<tr>
+					<th>
+						@Html.DisplayNameFor(model => model.Uso)
+					</th>
+					<th>
+						@Html.DisplayNameFor(model => model.Tipo)
+					</th>
+					<th>
+						@Html.DisplayNameFor(model => model.CantAmbientes)
+					</th>
+					<th>
+						@Html.DisplayNameFor(model => model.Precio)
+					</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr>
+					<td>
+						@Html.DisplayFor(modelItem => Model.Uso)
+					</td>
+					<td>
+						@Html.DisplayFor(modelItem => Model.Tipo)
+					</td>
+					<td>
+						@Html.DisplayFor(modelItem => Model.CantAmbientes)
+					</td>
+					<td>
+						$ @Html.DisplayFor(modelItem => Model.Precio)
+					</td>
+				</tr>
+			</tbody>
+		</table>
+	</div>
+	<div class="pt-4">
+		<table class="table ancho-850">
+			<thead>
+				<tr>
+					<th colspan="4">Datos del Propietario</th>
+				</tr>
+				<tr>
+					<th>
+						Nombre
+					</th>
+					<th>
+						Apellido
+					</th>
+					<th>
+						Telefono
+					</th>
+					<th>
+						Email
+					</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr>
+					<td>
+						@ViewBag.Propietario.Nombre
+					</td>
+					<td>
+						@ViewBag.Propietario.Apellido
+					</td>
+					<td>
+						@ViewBag.Propietario.Telefono
+					</td>
+					<td>
+						@ViewBag.Propietario.Email
+					</td>
+				</tr>
+			</tbody>
+		</table>
+	</div>
+</div>
+@* <div class="pt-4">
+	<table class="table ancho-850">
+		<thead>
+			<tr>
+				<th>
+					Acá va el detalle de los inmuebles que tiene para alquilar
+				</th>
+			</tr>
+		</thead>
+	</table>
+</div> *@
+<div class="form-group ancho-850 flex justify-content-evenly pt-5 pb-3">
+	<a asp-area="" asp-controller="Inmueble" asp-action="FormAM" asp-route-id="@Model.IdInmueble"
+		class="btn btn-outline-dark" />Editar datos</a>
+	<a asp-area="" asp-controller="Inmueble" asp-action="Index" class="btn btn-outline-secondary" />Volver</a>
+</div>

@@ -1,0 +1,57 @@
+﻿@model InmobiliariaUrquiULP_v1.Models.Pago
+@{
+	if (Model != null && Model.IdPago > 0)
+	{
+		ViewData["Title"] = "Actualizar datos del pago";
+	}
+	else
+	{
+		ViewData["Title"] = "Generar nuevo pago";
+	}
+
+}
+<div class="ancho-850 border-bottom box-shadow">
+	<div class="text-center">
+		<h1 class="display-6">@((Model != null && Model.IdPago > 0) ? "Editar Pago" : "Crear Pago")
+		</h1>
+	</div>
+</div>
+<div class="row justify-content-center pt-5">
+	<div class="col-md-4">
+		<form asp-action="@((Model != null && Model.IdPago > 0) ?  "Editar" : "Crear")">
+			<div asp-validation-summary="ModelOnly" class="text-danger"></div>
+			<input type="hidden" name="@nameof(Model.IdPago)" value="@(Model == null ? 0 : Model.IdPago)" />
+			<input type="hidden" name="@nameof(Model.IdUsuarioAlta)" value="@User.FindFirst("id").Value" />
+			<div class="form-group pb-4">
+				<label asp-for="IdContrato" class="control-label"></label>
+				<input asp-for="IdContrato" class="form-control no-arrows" readonly/>
+				<span asp-validation-for="IdContrato" class="text-danger"></span>
+			</div>
+			<div class="form-group pb-4">
+				<label asp-for="Numero" class="control-label"></label>
+				<input asp-for="Numero" class="form-control" readonly/>
+				<span asp-validation-for="Numero" class="text-danger"></span>
+			</div>
+			<div class="form-group pb-4">
+				<label asp-for="Fecha" class="control-label"></label>
+				<input type="date" asp-for="Fecha" class="form-control" />
+				<span asp-validation-for="Fecha" class="text-danger"></span>
+			</div>
+			<div class="form-group pb-4">
+				<label asp-for="Precio" class="control-label"></label>
+				<input asp-for="Precio" class="form-control" readonly/>
+				<span asp-validation-for="Precio" class="text-danger"></span>
+			</div>
+			<div class="form-group pb-4">
+				<label asp-for="Detalle" class="control-label"></label>
+				<input asp-for="Detalle" class="form-control" />
+				<span asp-validation-for="Detalle" class="text-danger"></span>
+			</div>
+			<div class="form-group flex justify-content-evenly pt-3 pb-3">
+				<input type="submit" value="@((Model != null && Model.IdPago > 0) ? "Modificar" : "Agregar")"
+					class="btn btn-outline-dark" />
+				<a asp-area="" asp-controller="Pago" asp-action="Index" class="btn btn-outline-danger" />Cancelar</a>
+			</div>
+		</form>
+	</div>
+</div>

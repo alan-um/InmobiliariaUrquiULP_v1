@@ -1,0 +1,105 @@
+﻿@model InmobiliariaUrquiULP_v1.Models.Inmueble
+@{
+	if (Model != null && Model.IdInmueble > 0)
+	{
+		ViewData["Title"] = "Actualizar datos del inmueble";
+	}
+	else
+	{
+		ViewData["Title"] = "Agregar nuevo inmueble";
+	}
+
+}
+<div class="ancho-850 border-bottom box-shadow">
+	<div class="text-center">
+		<h1 class="display-6">@((Model != null && Model.IdInmueble > 0) ? "Editar inmueble" : "Crear inmueble")
+		</h1>
+	</div>
+</div>
+<div class="row justify-content-center pt-5">
+	<div class="col-md-4">
+		<form asp-action="@((Model != null && Model.IdInmueble > 0) ?  "Editar" : "Crear")">
+			<div asp-validation-summary="ModelOnly" class="text-danger"></div>
+			<input type="hidden" name="@nameof(Model.IdInmueble)" value="@(Model == null ? 0 : Model.IdInmueble)" />
+			<div class="form-group pb-4">
+				<label asp-for="Nombre" class="control-label"></label>
+				<input asp-for="Nombre" class="form-control" />
+				<span asp-validation-for="Nombre" class="text-danger"></span>
+			</div>
+			<div class="form-group pb-4">
+				<label asp-for="IdPropietario" class="control-label"></label>
+				<select asp-for="IdPropietario" class="form-control">
+					@* <option value="option1">Option 1 Text</option> *@
+					<option value="" disabled selected>-- Seleccione el propietario del inmueble --</option>
+					@foreach (var item in ViewBag.ListaPropietario)
+					{
+						<option value="@item.IdPropietario">@item.ToString()</option>
+					}
+				</select>
+				<span asp-validation-for="IdPropietario" class="text-danger"></span>
+			</div>
+			<div class="form-group pb-4">
+				<label asp-for="Direccion" class="control-label"></label>
+				<input asp-for="Direccion" class="form-control" />
+				<span asp-validation-for="Direccion" class="text-danger"></span>
+			</div>
+			<div class="form-group pb-4">
+				<label asp-for="Uso" class="control-label"></label>
+				<select asp-for="Uso" class="form-control">
+					<option value="" disabled selected>-- Seleccione el uso del inmueble --</option>
+					<option value="Residencial">Residencial</option>
+					<option value="Comercial">Comercial</option>
+				</select>
+				<span asp-validation-for="Uso" class="text-danger"></span>
+			</div>
+			<div class="form-group pb-4">
+				<label asp-for="Tipo" class="control-label"></label>
+				<select asp-for="Tipo" class="form-control">
+					<option value="" disabled selected>-- Seleccione el tipo de inmueble --</option>
+					@foreach (var item in ViewBag.ListaTipoInmueble)
+					{
+						<option value="@item.Descripcion">@item.Descripcion</option>
+					}
+				</select>
+				<span asp-validation-for="Tipo" class="text-danger"></span>
+			</div>
+			<div class="form-group pb-4">
+				<label asp-for="CantAmbientes" class="control-label"></label>
+				<input asp-for="CantAmbientes" class="form-control" />
+				<span asp-validation-for="CantAmbientes" class="text-danger"></span>
+			</div>
+			<div class="form-group pb-4">
+				<label asp-for="Precio" class="control-label"></label>
+				<input asp-for="Precio" class="form-control" />
+				<span asp-validation-for="Precio" class="text-danger"></span>
+			</div>
+			<div class="form-group pb-4">
+				<label asp-for="Habilitado" class="control-label"></label>
+				<div class="radio-group">
+					@if (Model == null)
+					{
+						<label>
+							<input type="radio" asp-for="Habilitado" value="true" checked /> Habilitado
+						</label>
+					}
+					else
+					{
+						<label>
+							<input type="radio" asp-for="Habilitado" value="true" /> Habilitado
+						</label>
+					}
+					<label>
+						<input type="radio" asp-for="Habilitado" value="false" /> No alquilar
+					</label>
+				</div>
+				<span asp-validation-for="Habilitado" class="text-danger"></span>
+			</div>
+			<div class="form-group flex justify-content-evenly pt-3 pb-3">
+				<input type="submit" value="@((Model != null && Model.IdInmueble > 0) ? "Modificar" : "Agregar")"
+					class="btn btn-outline-dark" />
+				<a asp-area="" asp-controller="Inmueble" asp-action="Index"
+					class="btn btn-outline-danger" />Cancelar</a>
+			</div>
+		</form>
+	</div>
+</div>

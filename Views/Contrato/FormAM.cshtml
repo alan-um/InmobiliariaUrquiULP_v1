@@ -1,0 +1,72 @@
+﻿@model InmobiliariaUrquiULP_v1.Models.Contrato
+@{
+	if (Model != null && Model.IdContrato > 0)
+	{
+		ViewData["Title"] = "Actualizar datos del contrato";
+	}
+	else
+	{
+		ViewData["Title"] = "Agregar nuevo contrato";
+	}
+}
+<div class="ancho-850 border-bottom box-shadow">
+	<div class="text-center">
+		<h1 class="display-6">@((Model != null && Model.IdContrato > 0) ? "Editar Contrato" : "Crear Contrato")
+		</h1>
+	</div>
+</div>
+<div class="row justify-content-center pt-5">
+	<div class="col-md-4">
+		<form asp-action="@((Model != null && Model.IdContrato > 0) ?  "Editar" : "Crear")">
+			<div asp-validation-summary="ModelOnly" class="text-danger"></div>
+			<input type="hidden" name="@nameof(Model.IdContrato)" value="@(Model == null ? 0 : Model.IdContrato)" />
+			<input type="hidden" name="@nameof(Model.IdUsuarioAlta)" value="@User.FindFirst("id").Value" />
+			<div class="form-group pb-4">
+				<label asp-for="IdInmueble" class="control-label"></label>
+				<input asp-for="IdInmueble" class="form-control" type="hidden" />
+				<div class="infoInmueble form-control">
+					<h5>@Model.Inmueble.Nombre</h5>
+					<p style="margin:0px">@Model.Inmueble.Tipo - @Model.Inmueble.CantAmbientes ambientes.<br>
+						@Model.Inmueble.Direccion</p>
+				</div>
+				<span asp-validation-for="IdInmueble" class="text-danger"></span>
+			</div>
+			<div class="form-group pb-4">
+				<label asp-for="IdInquilino" class="control-label"></label>
+				<select asp-for="IdInquilino" class="form-control">
+					<option value="" disabled selected>-- Seleccione el inquilino del Contrato --</option>
+					@foreach (var item in ViewBag.ListaInquilino)
+					{
+						<option value="@item.IdInquilino">@item.ToString()</option>
+					}
+				</select>
+				<span asp-validation-for="IdInquilino" class="text-danger"></span>
+			</div>
+			<div class="flex justify-content-between">
+				<div class="form-group pb-4">
+					<label asp-for="fechaInicio" class="control-label"></label>
+					<input type="date" asp-for="fechaInicio" class="form-control"/>
+					<span asp-validation-for="fechaInicio" class="text-danger"></span>
+				</div>
+				<div class="form-group pb-4">
+					<label asp-for="fechaFin" class="control-label"></label>
+					<input type="date" asp-for="fechaFin" class="form-control"/>
+					<span asp-validation-for="fechaFin" class="text-danger"></span>
+				</div>
+			</div>
+			<div class="flex justify-content-center">
+				<div class="form-group pb-4">
+					<label asp-for="Precio" class="control-label"></label>
+					<input asp-for="Precio" class="form-control"/>
+					<span asp-validation-for="Precio" class="text-danger"></span>
+				</div>
+			</div>
+			<div class="form-group flex justify-content-evenly pt-3 pb-3">
+				<input type="submit" value="@((Model != null && Model.IdContrato > 0) ? "Modificar" : "Agregar")"
+					class="btn btn-outline-dark" />
+				<a asp-area="" asp-controller="@((Model != null && Model.IdContrato > 0) ? "Contrato" : "Alquilar")" asp-action="Index"
+					class="btn btn-outline-danger" />Cancelar</a>
+			</div>
+		</form>
+	</div>
+</div>

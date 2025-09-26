@@ -1,0 +1,111 @@
+﻿@model InmobiliariaUrquiULP_v1.Models.ViewModelPago
+@{
+	ViewData["Title"] = "Detalle del Pago";
+}
+<div class="ancho-850 border-bottom box-shadow">
+	<div class="text-center">
+		<h1 class="display-4">Detalles de Pago</h1>
+	</div>
+</div>
+<div class="pt-4">
+	<table class="table ancho-850">
+		<thead>
+			<tr>
+				<th>
+					@Html.DisplayNameFor(model => model.IdPago)
+				</th>
+				<th>
+					@Html.DisplayNameFor(model => model.Numero)
+				</th>
+				<th>
+					@Html.DisplayNameFor(model => model.Fecha)
+				</th>
+				<th>
+					@Html.DisplayNameFor(model => model.Precio)
+				</th>
+				<th>
+					@Html.DisplayNameFor(model => model.Estado)
+				</th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr>
+				<td>
+					@Html.DisplayFor(modelItem => Model.IdPago)
+				</td>
+				<td>
+					@Html.DisplayFor(modelItem => Model.Numero)
+				</td>
+				<td>
+					@Html.DisplayFor(modelItem => Model.Fecha)
+				</td>
+				<td>
+					$ @Html.DisplayFor(modelItem => Model.Precio)
+				</td>
+				<td>
+					@Html.DisplayFor(modelItem => Model.Estado)
+				</td>
+			</tr>
+		</tbody>
+	</table>
+	<div class="pt-2">
+		<table class="table ancho-850">
+			<thead>
+				<tr>
+					<th>
+						Pago por el alquiler de:
+					</th>
+					<th>
+						Contratado por:
+					</th>
+					<th>
+						@Html.DisplayFor(modelItem => Model.Detalle)
+					</th>
+					<th>
+						Recibió el pago:
+					</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr>
+					<td>
+						@Model.Inmueble.Nombre - @Model.Inmueble.Direccion
+					</td>
+					<td>
+						@Model.Inquilino.NombreApellido()
+					</td>
+					<td>
+						@Html.DisplayFor(modelItem => Model.Detalle)
+					</td>
+					<td>
+						@Model.UsuarioAlta.NombreApellido()
+					</td>
+				</tr>
+			</tbody>
+		</table>
+	</div>
+	@if (Model.IdUsuarioBaja > 0 && User.IsInRole("Administrador"))
+	{
+		<div class="pt-4">
+			<table class="ancho-850 bajaAnticipada">
+				<thead>
+					<tr>
+						<th colspan="4" style="color:darkred">El pago ha sido anulado por:</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr>
+						<td>
+							@Model.UsuarioBaja.NombreApellido()
+						</td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
+	}
+</div>
+<div class="form-group ancho-850 flex justify-content-evenly pt-4 pb-3">
+	<a asp-area="" asp-controller="Pago" asp-action="FormAM" asp-route-id="@Model.IdPago"
+		class="btn btn-outline-dark" />Editar datos</a>
+	<a asp-area="" asp-controller="Pago" asp-action="Index" class="btn btn-outline-secondary" />Volver</a>
+</div>
