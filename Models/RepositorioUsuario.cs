@@ -361,7 +361,8 @@ public class RepositorioUsuario : RepositorioBase
                         {nameof(Usuario.isAdmin)},
                         {nameof(Usuario.Estado)}
                     FROM Usuario
-                    WHERE {nameof(Usuario.Email)} LIKE @Email";
+                    WHERE {nameof(Usuario.Estado)}=true
+                    AND {nameof(Usuario.Email)} LIKE @Email";
                 using (MySqlCommand command = new MySqlCommand(sql, connection))
                 {
                     command.Parameters.AddWithValue("@Email", Email);

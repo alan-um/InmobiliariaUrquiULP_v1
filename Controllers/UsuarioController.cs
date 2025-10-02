@@ -55,6 +55,7 @@ public class UsuarioController : Controller
         return View(lista);
     }
 
+    [Authorize(Policy = "Administrador")]
     public IActionResult FormAM(int id)
     {
         Usuario? u = null;
@@ -196,6 +197,7 @@ public class UsuarioController : Controller
     //---------------------------------------------------------------------------------------------------------
     [HttpPost]
     [ValidateAntiForgeryToken]
+    [Authorize(Policy ="Administrador")]
     public IActionResult Crear(Usuario u)
     {
         int res = -1;
